@@ -1,0 +1,52 @@
+Exercise 11
+Ask the user for a number and determine whether the number is prime or not. (For those who have forgotten, a prime number is a number that has no divisors.). You can (and should!) use your answer to Exercise 4 to help you.
+
+Sample solution
+There are many ways of solving this problem, so here are a sample solutions:
+
+This one is a different breakdown of functions to solve the problem. The strings between three ''' marks are comments in the code that describe what each function does.
+
+And here is a solution without using functions. It is also a correct solution that accomplishes the given task, just without the use of functions.
+
+import sys
+number = input("Please enter a number" + "\n" + ">>>")
+number = int(number)
+prime = False #initiate boolean for true false, default false
+if number > 0:
+    for x in range (2, number - 1): #this range excludes number and 1, both of which number is divisible by
+        if number % x != 0: #If number isn't evenly divisible by x, start over with the next one
+            continue 
+        elif number % x == 0: #If number is evenly divisible by x, it can't be prime
+            sys.exit("The number is not prime.")
+    sys.exit("The number is prime.") #number wasn't evenly divisible by any x, so it's prime
+elif number == 0:
+    sys.exit("The number is not prime.") #According to the Google, 0 is not prime
+else:#if number is less than 0, the number is not prime (according to the Google).
+    sys.exit("The number is not prime.")
+view rawcheckprimality.py hosted with ❤ by GitHub
+This solution doesn’t use functions, but does use list comprehensions, which are always fun. Thanks to Carlos for this solution. The interesting thing here is the observation that when you want to check if a number is prime, all you need to do is check the numbers from 2 to the square root of the number. This is because the pair of numbers that are both the largest factors of the number are square root of x and square root of x. Otherwise, the number you are checking for can be found by finding the corresponding factor and checking it.
+
+# Assumes that "a" contains an integer > 2 whose primality needs to be verified
+# The algorithm builds a list of factors including the number 2 and all odd numbers 
+# up to the square root of "a", and then checks if any of those numbers divides "a" 
+# without a remainder - if so then "a" is not prime, else it is
+if sum([ True if a%factor == 0 else False for factor in ( [2] + list(range(3,int(math.sqrt(a))+1,2) )) ]): 
+  print("Number is composite")
+else: 
+  print("Number is prime")
+view rawgistfile1.txt hosted with ❤ by GitHub
+Another solution is a clean, short solution that uses list comprehensions.
+
+num = int(raw_input('Insert a number: '))
+a = [x for x in range(2, num) if num % x == 0]
+
+def is_prime(n):
+	if num > 1:
+		if len(a) == 0:
+			print 'prime'
+		else:
+			print 'NOT prime'
+	else:
+		print 'NOT prime'
+	
+is_prime(num)
