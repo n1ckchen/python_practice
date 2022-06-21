@@ -1,0 +1,30 @@
+Exercise 22
+Given a .txt file that has a list of a bunch of names, count how many of each name there are in the file, and print out the results to the screen. I have a .txt file for you, if you want to use it!
+
+Extra:
+
+Instead of using the .txt file from above (or instead of, if you want the challenge), take this .txt file, and count how many of each “category” of each image there are. This text file is actually a list of files corresponding to the SUN database scene recognition database, and lists the file directory hierarchy for the images. Once you take a look at the first line or two of the file, it will be clear which part represents the scene category. To do this, you’re going to have to remember a bit about string parsing in Python 3. I talked a little bit about it in this post.
+Sample solution
+The basics of reading any file is that you need to read each line one by one, only reading the next line if the next line exists. The skeleton code for this operation is shown here:
+
+  with open('filename.txt') as f:
+  	line = f.readline()
+  	while line:
+  		print(line)
+  		line = f.readline()
+Basically, after you open the file, read one line at a time. Then, check if the line exists using the statement while line, and if it does, get the next line. What happens when the next time line = f.readline() is called and there is no next line? while line the next time around in the loop will return False and the code stops.
+
+Given this skeleton, the first solution counts the different names in the nameslist.txt file.
+
+counter_dict = {}
+with open('nameslist.txt') as f:
+	line = f.readline()
+	while line:
+		line = line.strip()
+		if line in counter_dict:
+			counter_dict[line] += 1
+		else:
+			counter_dict[line] = 1
+		line = f.readline()
+
+print(counter_dict)

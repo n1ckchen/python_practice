@@ -1,0 +1,31 @@
+Exercise 19
+The How To Decode A Web Page Two exercise was a follow-up to the extremely challenging prelude, How To Decode A Web Page. The purpose of the original (and the follow-up exercise) was to give people a chance to poke around at a close-to-real application of Python.
+
+A few people submitted solutions to this exercise (one example is given at the bottom of the page), and many of them used things that I haven’t yet talked about in the exercises. I will not go into extreme detail about how to solve this problem - I will just present the important points for one way you could solve this problem. For a more detailed solution to a similar problem, I encourage you to look at the solution to the previous exercise (How To Decode A Web Page).
+
+And without further ado, a plan for achieving the solution:
+
+Use the requests library to load the HTML of the page into Python
+Find out which HTML tags contain the article text
+Use BeautifulSoup to process HTML and extract the text of the article
+Print the extracted text to the screen
+In my opinion, the difficult part of this exercise is figuring out the elements on the page (whether that is through HTML or CSS selectors) that contain all the text of the article. It requires knowing or exploring a little bit about CSS selectors and reading documentation. Such is the way of working with web pages.
+
+A few observations on that point:
+
+The entire text of the article is on this single page - no need to move to another URL. The text is placed inside “hidden containers” that are just set to invisible.
+It seems that article text comes inside p elements that are inside div elements of class body that are inside div elements that have classes parbase and cn_text. But it also seems that there are other things like hyperlinks and article comments also fall inside this structure.
+When you select for this in BeautifulSoup, the first 7 elements that come out are links and the introduction, so we just want to ignore those.
+Given these observations, this solution:
+
+import requests
+from bs4 import BeautifulSoup
+
+base_url = "http://www.vanityfair.com/society/2014/06/monica-lewinsky-humiliation-culture"
+r = requests.get(base_url)
+soup = BeautifulSoup(r.text)
+
+all_p_cn_text_body = soup.select("div.parbase.cn_text > div.body > p")
+
+for elem in all_p_cn_text_body[7:]:
+  print(elem.text)
