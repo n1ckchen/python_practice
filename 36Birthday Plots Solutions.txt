@@ -1,0 +1,73 @@
+Exercise 36
+This exercise is Part 4 of 4 of the birthday data exercise series. The other exercises are: Part 1, Part 2, and Part 3.
+
+In the previous exercise we counted how many birthdays there are in each month in our dictionary of birthdays. In this exercise, use the bokeh Python library to plot a histogram of which months the scientists have birthdays in using my scientist birthday JSON file.
+
+Solution
+In our solution we need to:
+
+Load the JSON data
+Count the number of months
+Plot with Bokeh
+There are a few ways to do this, but here is mine:
+
+from collections import Counter
+import json
+import math
+
+from bokeh.plotting import figure, show, output_file
+
+
+DATA_FILE = "scientist_birthdays.json"
+output_file("plot.html")
+
+with open(DATA_FILE, "r") as f:
+    DATA = json.load(f)
+
+num_to_string = {
+    1: "January",
+    2: "February",
+    3: "March",
+    4: "April",
+    5: "May",
+    6: "June",
+    7: "July",
+    8: "August",
+    9: "September",
+    10: "October",
+    11: "November",
+    12: "December"
+}
+
+months = []
+for name, birthday_string in DATA.items():
+    month = int(birthday_string.split("/")[0])
+    months.append(num_to_string[month])
+months = Counter(months)
+
+months, counts = list(zip(*months.items()))
+
+categories = list(num_to_string.values())
+p = figure(x_range=categories, title="Scientists' Birthday Months")
+p.xaxis.major_label_orientation = math.pi/4
+p.vbar(x=months, top=counts)
+
+show(p)
+And my output plot looks like this (you must have Javascript enabled to see it):
+
+One interesting syntax is the line months, counts = list(zip(*months.items())). What this does is takes the months dictionary, returns it as tuples, then unzips them into two lists. We can see this output by looking at the individual outputs one at a time in the shell:
+
+In [1]: months
+Out[1]: Counter({'March': 1, 'December': 1, 'January': 1})
+
+In [2]: months.items()
+Out[2]: dict_items([('March', 1), ('December', 1), ('January', 1)])
+
+In [3]: zip(*months.items())
+Out[3]: <zip at 0x7fed18fd8040>
+
+In [4]: list(zip(*months.items()))
+Out[4]: [('March', 'December', 'January'), (1, 1, 1)]
+The end result is two lists, one for the months and one for the counts, that are in the correct order.
+
+Happy coding!

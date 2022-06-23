@@ -1,0 +1,60 @@
+Implement a function that takes as input three variables, and returns the largest of the three. Do this without using the Python max() function!
+
+Sample solutions
+There are many ways to answer this question, ranging from simple to complex. Here are a few reader-submitted answers!
+
+This first example solution uses a series of if statements and comparisons to find the largest of 3 elements.
+
+def max_of_three(a,b,c):
+     max_3=0
+     if a>b:
+         #max_3=a
+         if a>c:
+             max_3=c
+         else:
+             max_3=a
+     else:
+          if b>c:
+             max_3=b
+          else:
+             max_3=c
+     return max_3
+view rawmax of three hosted with ❤ by GitHub
+Another solution is a little bit less verbose, taking 3 numbers as an input, making them into a list, sorting them, and then reading off the largest element.
+
+This last solution uses a more compact series of if statement comparisons to cover all cases of 3 elements.
+
+#!/usr/bin/env python
+import sys
+
+if len(sys.argv) < 4:
+    print 'Usage <value1> <value2> <value3>'
+    sys.exit ( 1 )
+    
+arg1 = sys.argv[1]
+arg2 = sys.argv[2]
+arg3 = sys.argv[3]
+def maxfunction(a,b,c):
+	if (a > b) and (a > c):
+	    print 'Max value is :',a
+        elif (b > a) and (b > c):
+            print 'Max value is :',b
+        elif (c > a) and (c > b):
+            print 'Max value is :',c
+            
+maxfunction(arg1,arg2,arg3)
+
+
+def max_three(a,b,c):
+# solution1
+# if a > b and a > c:
+# return a
+# if b > a and b > c:
+# return b
+# if c > a and c > b:
+# return c
+
+#solution2
+great_num = a if a > b else b
+great_num = great_num if great_num > c else c
+return great_num
